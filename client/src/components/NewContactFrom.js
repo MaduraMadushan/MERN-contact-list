@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {addContact} from './../actions/index'
 
 class NewContactFrom extends Component {
     state = {
@@ -13,7 +15,16 @@ class NewContactFrom extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-
+        this.props.addContact(this.state).then(response => {
+            if(response.payload){
+                console.log(response.payload)
+                this.setState({
+                    name: '',
+                    email: '',
+                    phonenumber: ''
+                })
+            }
+        })
     }
 
     render() { 
@@ -35,4 +46,4 @@ class NewContactFrom extends Component {
     }
 }
  
-export default NewContactFrom;
+export default connect(null, {addContact})(NewContactFrom);
