@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NewContactFrom from './NewContactFrom';
 import ContactList from './ContactList';
 import {Link} from 'react-router-dom';
 

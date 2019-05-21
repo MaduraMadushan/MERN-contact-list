@@ -1,13 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getContacts} from './../actions/index';
+import {getContacts, detContact} from './../actions/index';
 
 class ContactList extends Component {
     state = { 
-        contacts: ''
+        contacts: []
      }
     componentDidMount(){
         this.setState({contacts:this.props.getContacts()})
+    }
+
+    handleDelete = (id) => {
+        this.props.detContact(id).then(response => {
+            if(response.payload){
+                this.setState({contacts: this.props.getContacts()})
+            }
+        })
     }
     render() { 
         const contacts = this.props.contacts.contacts;
@@ -31,7 +39,7 @@ class ContactList extends Component {
                             <td>{contact.name}</td>
                             <td>{contact.email}</td>
                             <td>{contact.phonenumber}</td>
-                            <td><button>Edit</button><button>Delete</button></td>
+                            <td><button>Edit</button><button onClick={() => this.handleDelete(contact._id)}>Delete</button></td>
                         </tr>
                     ))
                     :null}
@@ -45,4 +53,4 @@ const mapStateToProps = (state) => ({
     contacts: state.contacts
 })
  
-export default connect(mapStateToProps, {getContacts})(ContactList);
+export default connect(mapStateToProps, {getContacts, detContact})(ContactList);
