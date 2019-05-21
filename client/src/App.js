@@ -1,14 +1,12 @@
-import React from 'react';
-class App extends React.Component {
-  
-  render(){
-   
-    return(
-      <div>
-        App
-      </div>
-    )
-  }
-}
+import React from 'react'
+import ContactList from './components/Contact';
 
+const App = () => {
+  return ( 
+    <div>
+      <ContactList />
+    </div>
+   );
+}
+ 
 export default App;
