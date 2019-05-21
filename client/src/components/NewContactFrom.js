@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {addContact} from './../actions/index'
+import {addContact} from './../actions/index';
+import {withRouter} from 'react-router-dom'
 
 class NewContactFrom extends Component {
     state = {
@@ -15,20 +16,23 @@ class NewContactFrom extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.addContact(this.state).then(response => {
+        this.props.addContact(this.state.name, this.state.email, parseInt(this.state.phonenumber)).then(response => {
             if(response.payload){
-                console.log(response.payload)
                 this.setState({
                     name: '',
                     email: '',
                     phonenumber: ''
                 })
+                setTimeout(() => {
+                    this.props.history.push('/')
+                },3000)
             }
         })
     }
 
     render() { 
         const {name, email, phonenumber} = this.state;
+        console.log(this.state)
         return ( 
             <form onSubmit={this.handleSubmit}>
                 <label htmlFor="name">name</label>
@@ -38,7 +42,7 @@ class NewContactFrom extends Component {
                 <input type="email" id="email" name="email" value={email} onChange={this.handleChange}/>
 
                 <label htmlFor="phone">name</label>
-                <input type="number" id="phone" name="phonenumber" value={phonenumber} onChange={this.handleChange}/>
+                <input type="text" id="phone" name="phonenumber" value={phonenumber} onChange={this.handleChange}/>
 
                 <button type="submit">Add Contact</button>
             </form>
@@ -46,4 +50,4 @@ class NewContactFrom extends Component {
     }
 }
  
-export default connect(null, {addContact})(NewContactFrom);
+export default connect(null, {addContact})(withRouter(NewContactFrom));

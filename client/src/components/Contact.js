@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import NewContactFrom from './NewContactFrom';
 import ContactList from './ContactList';
+import {Link} from 'react-router-dom';
 
 class Contact extends Component {
     state = {  }
     render() { 
         return ( 
             <div>
-                <h1>Contact List</h1>
-                <NewContactFrom />
+                <div>
+                    <h1>Contact List</h1>
+                    <Link to="/addcontact">Add Contact</Link>
+                </div>
                 <ContactList />
             </div>
          );

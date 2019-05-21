@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {ADD_CONTACT, GET_CONTACTS} from './type';
 
-export const addContact = (dataToSubmit) => {
-    const request = axios.post(`/api/contact`, dataToSubmit)
+export const addContact = (name, email, phonenumber) => {
+    const request = axios.post(`/api/contact`,{name, email, phonenumber})
                     .then(response => response.data)
     
     return {

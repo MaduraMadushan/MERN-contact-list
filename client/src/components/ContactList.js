@@ -3,9 +3,11 @@ import {connect} from 'react-redux';
 import {getContacts} from './../actions/index';
 
 class ContactList extends Component {
-    state = {  }
+    state = { 
+        contacts: ''
+     }
     componentDidMount(){
-        this.props.getContacts()
+        this.setState({contacts:this.props.getContacts()})
     }
     render() { 
         const contacts = this.props.contacts.contacts;
