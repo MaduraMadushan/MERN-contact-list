@@ -41,7 +41,7 @@ class ContactList extends Component {
         const contactList = paginate(contacts, this.state.currentPage, this.state.pageSize)
         return ( 
             <div>
-                <table>
+                <table className="table table-striped table-dark">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -59,7 +59,10 @@ class ContactList extends Component {
                                 <td>{contact.name}</td>
                                 <td>{contact.email}</td>
                                 <td>{contact.phonenumber}</td>
-                                <td><button onClick={() => this.handleEdit(contact._id)}>Edit</button><button onClick={() => this.handleDelete(contact._id)}>Delete</button></td>
+                                <td>
+                                <button className="btn btn-primary btn-small mr-2" onClick={() => this.handleEdit(contact._id)}>Edit</button>
+                                <button className="btn btn-danger btn-small" onClick={() => this.handleDelete(contact._id)}>Delete</button>
+                                </td>
                             </tr>
                         ))
                         :null}

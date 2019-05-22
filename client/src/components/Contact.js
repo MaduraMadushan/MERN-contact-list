@@ -6,10 +6,10 @@ class Contact extends Component {
     state = {  }
     render() { 
         return ( 
-            <div>
-                <div>
+            <div className="container">
+                <div className="d-flex justify-content-between align-items-center mx-5 mt-5">
                     <h1>Contact List</h1>
-                    <Link to="/addcontact">Add Contact</Link>
+                    <Link className="btn btn-info" to="/addcontact">Add Contact</Link>
                 </div>
                 <ContactList />
             </div>
