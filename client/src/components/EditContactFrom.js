@@ -1,28 +1,41 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {addContact} from './../actions/index';
+import {getContact, updContact} from './../actions/index';
 import {withRouter} from 'react-router-dom'
 
-class NewContactFrom extends Component {
-    state = {
+class EditContactFrom extends Component {
+    state = { 
+        id: '',
         name: '',
         email: '',
         phonenumber: ''
-    }
+     }
 
-    componentDidMount(){
-        
-    }
+     componentDidMount(){
+        const id = this.props.match.params.id
+        this.props.getContact(id).then(response => {
+            if(response.payload){
+                const contacts = this.props.contacts.contact
+                this.setState({
+                    id: contacts._id,
+                    name: contacts.name,
+                    email: contacts.email,
+                    phonenumber: contacts.phonenumber
+                })
+            }
+        })
+     }
 
-    handleChange = (e) => {
+     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value})
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.addContact(this.state.name, this.state.email, parseInt(this.state.phonenumber)).then(response => {
+        this.props.updContact(this.state.id, this.state.name, this.state.email, parseInt(this.state.phonenumber)).then(response => {
             if(response.payload){
                 this.setState({
+                    id: '',
                     name: '',
                     email: '',
                     phonenumber: ''
@@ -32,11 +45,13 @@ class NewContactFrom extends Component {
                 },3000)
             }
         })
+       
     }
 
     render() { 
         const {name, email, phonenumber} = this.state;
-        console.log(this.state)
+        const contacts = this.props.contacts.contact;
+        console.log('edit',contacts)
         return ( 
             <form onSubmit={this.handleSubmit}>
                 <label htmlFor="name">name</label>
@@ -53,5 +68,9 @@ class NewContactFrom extends Component {
          );
     }
 }
+
+const mapStateToProps = (state) => ({
+    contacts: state.contacts
+})
  
-export default connect(null, {addContact})(withRouter(NewContactFrom));
+export default connect(mapStateToProps, {getContact, updContact})(withRouter(EditContactFrom));

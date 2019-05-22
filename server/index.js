@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://127.0.0.1:27017/max-games', {
+mongoose.connect('mongodb://127.0.0.1:27017/contact-list', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false
@@ -23,8 +23,14 @@ app.post('/api/contact', async(req, res) => {
 })
 
 app.get('/api/contact', async(req, res) => {
+    let limit = req.query.limit ? parseInt(req.query.limit) : 100
+    let skip = req.query.skip ? parseInt(req.query.skip) : 0
+    
     try{
         const contact = await Contact.find({})
+                                .limit(limit)
+                                .skip(skip)
+                                .exec()
         res.send(contact)
     }catch(e){
         res.status(500).send()
